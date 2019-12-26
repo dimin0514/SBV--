@@ -9,12 +9,11 @@
                 <button style="height: 38%; width: 20%; float: right;">수정</button><br/><br/>
            </fieldset>
            <fieldset style="margin-top: 1%; height: 60%;border: 2px solid black;">
-              <legend><h3>학생부 관리</h3></legend>
+              <legend><h3>성적 확인</h3></legend>
                   <h5>{{person.hak}} 학년 </h5>
                   <h5>{{person.ban}} 반 </h5>
                   <h5>{{person.score}} 점 </h5>
                 <br/><br/>
-                <button style="height: 20%; width: 70%; float: none;" @click.prevent="goupdate">정보 수정</button>
            </fieldset>
         </div>
       </div>
@@ -29,9 +28,14 @@ export default{
     return {
        context : 'http://localhost:8080/',
        name: store.state.name,
-       person : store.state.person
-    }
-  },
+       person : store.state.person,
+       sidebars: [
+				{menu:"비밀번호 수정",link:"/update"}
+      ],
+      authCheck : true
+		}
+		
+	},
   methods:{
      goupdate(){
       alert(`회원정보 수정 `)

@@ -1,7 +1,7 @@
 <template>
 <div id="wrapper">
 	<header>
-		<slot name="header" :title="header"></slot>
+		<slot name="header" :title="changeMessage"></slot>
 	</header>
 	<aside id="sidebar">
 		<slot name="sidebar" :title="aside"></slot>
@@ -15,15 +15,20 @@
 </div>	
 </template>
 <script>
+import {store} from "../../store"
 export default {
 	data(){
 		return{
-			header : "헤더부분",
 			content: "컨텐트",
 			footer : "푸터",
-			aside:"ㅇ"
+			aside:""
 		}
-	}
+     },
+     computed: {
+          changeMessage: function () {
+               return store.state.headerMessage
+     }
+  }
 }
 </script>
 <style scoped>

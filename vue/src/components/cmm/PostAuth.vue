@@ -8,18 +8,13 @@
 import axios from "axios"
 import {store} from "../../store"
 export default{
-    data(){
-
-    },
-    methods : {
+     methods : {
         logout(){
          alert(`로그아웃 `)
-        store.state.loginedUid =''
-        store.state.loginedPwd = ''
-        store.state.name = ''
-        store.state.birthday = ''
-        store.state.id = ''
-        this.$router.push({path:`/login`})
+          store.state.person = {},
+          store.state.authCheck = false,
+          store.state.sidebar = 'preSidebar',
+          this.$router.push({path: '/login'})
     },
     withdrawal(){
       alert(`회원탈퇴 되냐?`)

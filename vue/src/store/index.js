@@ -6,12 +6,9 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
-		person : {},
-		authCheck : false
-		// loginedUid:'',
-		// loginedPwd:'',
-		// id:'',
-		// name:'',
-		// birthday:''
+		person: {},
+		authCheck: false,
+		sidebar: 'preSidebar',
+		headerMessage:'공통 화면 '
   }
 })

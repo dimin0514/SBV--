@@ -1,18 +1,30 @@
 package com.catdog.web.person;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.*;
+import static java.util.stream.Collectors.*;
+import static java.util.Comparator.*;
 
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.catdog.web.utl.Printer;
+
+import sun.security.acl.GroupImpl;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:8081")
@@ -23,6 +35,11 @@ public class PersonController {
 	private Printer printer;
 	@Autowired
 	private Person person;
+	@Autowired
+	ModelMapper modelMapper;
+	
+	@Bean
+	public ModelMapper modelMapper() {return new ModelMapper();}
 	
 	@RequestMapping("/")
 	public String index() {
@@ -65,9 +82,27 @@ public class PersonController {
 		personRepository.delete(personRepository.findByUserid(userid));
 	}
 	
-//	@PostMapping("/update/{userid}")
-//	public void modefy(@PathVariable String userid,@RequestBody Person param) {
-//		personRepository.update(param);
-//	}
-
+	@PutMapping("/modify")
+	public HashMap<String,Object> modify(@RequestBody Person person) {
+		HashMap<String,Object> map =new HashMap<>();
+		personRepository.save(person);			
+		System.out.println("수정 성공");
+		map.put("result", "SUCCESS");
+		map.put("data", personRepository.findByUseridAndPasswd(person.getUserid(), person.getPasswd()));
+		return map;
+		
+	}
+	@GetMapping("/students")
+	public Stream<PersonDTO> list(){
+		printer.accept("list");
+		Iterable<Person> entites = personRepository.findAll();
+		//Iterable<Person> entites = personRepository.findByRole("student");
+		List<PersonDTO> list = new ArrayList<>();
+		for(Person p: entites) {
+			PersonDTO dto = modelMapper.map(p, PersonDTO.class);
+			list.add(dto);
+		}
+		return list.stream().filter(role-> role.getRole().equals("student"));
+	}
+	
 }

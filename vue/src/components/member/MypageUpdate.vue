@@ -29,12 +29,18 @@ export default{
     return {
        context : 'http://localhost:8080/',
        name: store.state.name,
-       person : store.state.person
-      
-
-
-    }
-  },
+       person : store.state.person,
+       sidebars: [
+				{menu:"학생등록",link:"/write"},
+				{menu:"학생목록",link:"/list"},
+				{menu:"학생정보수정",link:"/update"},
+				{menu:"학생정보삭제",link:"/remove"},
+				{menu:"학생검색",link:"/search"}
+      ],
+      authCheck : true
+		}
+		
+	},
   methods:{
     logout(){
       alert(`로그아웃 `)
@@ -62,25 +68,31 @@ export default{
     },
     modify(){
       alert(`회원정보 수정 `)
-      let url = `${this.context}/update`
-      let data = {
-          hak :this.person.hak,
-          ban :this.person.ban,
-          score:this.person.score
-      }
-      let headers = {}
+      let url = `${this.context}/modify`
+      let data = this.person
+      let headers = {
+                'authorization': 'JWT fefege..',
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+      }      
       axios
-      .post(url, data, headers)
-      .then(
-        alert(`변경 성공? `)
-      )
-      .catch(()=>{
-        alert(`axios 실패`)
-      })
+      .put(url, data, headers)
+      .then(res=>{
+        this.person = res.data.data
+        if(res.data.result ==="SUCCESS"){
+          alert(`수정  성공 `);
+        this.$router.push({path:  '/mypage'})
+        }else{
+          alert(`수정 실패 `);                
+        this.$router.push({path:  '/join'})                 
+        }
+        })
+       .catch(()=>{
+         alert('AXIOS 실패')
+      })             
     }
   },
   create(){
-
   }
 }
 </script>
