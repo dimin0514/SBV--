@@ -25,7 +25,6 @@ public class Proxy {
 	public int random(int a, int b) {
 		BiFunction<Integer, Integer, Integer> f =(t,u)->(int)(Math.random()*(u-t))+t;
 		return f.apply(a, b);
-		
 	}
 	public int[] array(int size) {
 		Function<Integer, int[]> f = int[] :: new;
@@ -45,6 +44,5 @@ public class Proxy {
 		BiFunction<File,String, File> f = File::new;
 		return f.apply(t, u);
 	}
-	
 	
 }

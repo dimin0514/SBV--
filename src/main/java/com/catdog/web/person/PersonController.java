@@ -37,6 +37,7 @@ public class PersonController {
 	private Person person;
 	@Autowired
 	ModelMapper modelMapper;
+	@Autowired PersonService personService;
 	
 	@Bean
 	public ModelMapper modelMapper() {return new ModelMapper();}
@@ -104,5 +105,57 @@ public class PersonController {
 		}
 		return list.stream().filter(role-> role.getRole().equals("student"));
 	}
+//	@GetMapping("/students/search/{searchWord}")
+//	public List<PersonDTO> findSome2(@PathVariable String searchWord){
+//		List<PersonDTO> list = new ArrayList<>();
+//		switch (searchWord) {
+//		case "topByGrade":
+//			Iterable<Person> entites = personRepository.findGroupByHak();
+//			for(Person p: entites) {
+//				PersonDTO dto = modelMapper.map(p, PersonDTO.class);
+//				list.add(dto);
+//			}
+//			break;
+//		default:
+//			break;
+//		}
+//		printer.accept("list");
+//		return list;
+//	}
 	
+	@GetMapping("/students/search/{searchWord}")
+	public Stream<PersonDTO> findSome(@PathVariable String searchWord){
+		personService.findByHak();
+		switch(searchWord) {
+			case "namesOfStudents" :break;
+			case "streamToArray" :break;
+			case "streamToMap" :break;
+			case "theNumberOfStudents" :break;
+			case "totalScore" :break;
+			case "topStudent" :break;
+			case "getStat" :break;
+			case "nameList" :break;
+			case "partioningByGender" :break;
+			case "partioningCountPerGender" :break;
+			case "partioningTopPerGender" :break;
+			case "partioningRejectPerGender" :break;
+			case "groupingByBan" :break;
+			case "groupingByGrade" :break;
+			case "groupingByCountByLevel" :break;
+			case "groupingByHakAndBan" :break;
+			case "groupingTopByHakAndBan" :break;
+			case "groupingByStat" :break;
+		}
+		Iterable<Person> entites = personRepository.findGroupByHak();
+		List<PersonDTO> list = new ArrayList<>();
+		for(Person p: entites) {
+			PersonDTO dto = modelMapper.map(p, PersonDTO.class);
+			list.add(dto);
+		}
+		
+		return list.stream()
+				.filter(role-> role.getRole().equals("student"));
+		
+	}
+
 }
