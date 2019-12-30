@@ -25,7 +25,16 @@
 		<td>{{j.score}}</td>
 		<td>{{j.role}}</td>
 		</tr>
-	</table>  	
+	</table>
+	<div class="btn-cover">
+      <button :disabled="pageNum === 0" @click="prevPage" class="page-btn">
+		이전
+      </button>
+      <span class="page-count">{{ pageNum + 1 }} </span>
+      <button :disabled="pageNum >= pageCount - 1" @click="nextPage" class="page-btn">
+		다음
+      </button>
+	</div>  	
 </div>	
 </template>
 <script>
@@ -34,17 +43,19 @@ export default {
 	data(){
 		return{
 			context: 'http://localhost:8080/',
-			list:[]
+			list:[],
+			pageNum: 0,
+			pageCount: 5
 		}
 	},
 	created(){
 		axios
 		.get(`${this.context}/students`)
-		.then(res=>{
+		.then(res =>{
 			this.list = res.data
 		})
 		.catch(e=>{
-			alert('Axios 실패'+e)
+			alert('AXIOS FAIL'+e)
 		})
 	}
 }
