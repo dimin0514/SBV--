@@ -30,7 +30,6 @@
         </div>
 </template>
 <script>
-import axios from 'axios'
 export default {
 	data () {
 		return {
@@ -43,39 +42,7 @@ export default {
 		}
 	},
 	methods:{
-		join(){
-            alert(`thiscontext는? `)
-			let url =`${this.context}/join`
-            let data = {
-                userid : this.userid,
-				passwd : this.passwd,
-				birthday : this.birthday,
-				name: this.name
-            }
-            let headers = {
-              'authorization': 'JWT fefege..',
-              'Accept' : 'application/json',
-              'Content-Type': 'application/json'
-			}
-			axios
-            .post(url, data, headers)
-            .then(res=>{
-                if(res.data.result === "SUCCESS"){
-                    alert(`회원가입 성공`)
-                    this.person = res.data.person
-                    
-                    this.$router.push({path:`/mypage`})
-                }else{
-                     alert(`회원가입실패 `)
-                }
-				this.person = res.data.person
-                 
-            })
-            .catch(()=>{
-                alert('AXIOS 실패')
-            })
-
-		}
+		
 	}
 }
 </script>
