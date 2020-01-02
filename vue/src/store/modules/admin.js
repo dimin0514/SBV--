@@ -1,5 +1,5 @@
 //import loginAPI from '@/api/loginAPI'
-import Constant from '@/store/mutation_types'
+import Constant from '@/store/modules/mutation_types'
 import axios from 'axios'
 const state = {
     admin: {},
@@ -8,25 +8,37 @@ const state = {
                 {menu:"조건별 학생검색",link:"/studentsFindSome"},
 				{menu:"학생성적수정",link:"/update"},
 				{menu:"ID 학생검색",link:"/studentFindOne"}
-			],
+            ],
+    isAuth:'',
+    header:'로그인전'
 }
 const getters = {
-	getAdmin: state => state.admin
+    getAdmin: state => state.admin,
+    getIsAuth : state => state.isAuth,
+    getHeader : state => state.header
 }
 const actions = {
-	async login(){
-            alert(`${this.userid} ,  ${this.passwd}`)
-            let url = `${ this.$store.state.context}/login`
-            let data = {
-                userid: this.userid,
-                passwd: this.passwd
-            }
+    login({commit},{context, userid, passwd}){
+            alert(`${context},${userid},${passwd}` )
+            // alert(`${this.userid} ,  ${this.passwd}`)
+             let url = `${context}login`
+             // let url = `${ this.$store.state.context}/login`
+            // let data = {
+            //     userid: this.userid,
+            //     passwd: this.passwd
+            // }
             let headers = {
                 'authorization': 'JWT fefege..',
                 'Accept' : 'application/json',
                 'Content-Type': 'application/json'
             }
             axios
+            .post(url, {userid, passwd}, headers)
+            .then(({data})=>{commit('LOGIN',data)})
+            .catch(()=>{
+                alert('AXIOS 실패')
+            })  
+            /* axios
             .post(url, data, headers)
             .then(res=>{
                 if(res.data.result === "SUCCESS"){
@@ -51,7 +63,7 @@ const actions = {
             })
             .catch(()=>{
                 alert('AXIOS 실패')
-            })  
+            }) */  
             
           },
       async join(){
@@ -83,15 +95,19 @@ const actions = {
           }
 }
 const mutations = {
-    LOGIN (state, person) {
-        state.person = person
+    LOGIN (state, data) {
+        state.isAuth = data.result
+        state.admin = data.person
+        state.header = '로그인후'
+
     },
     LOGOUT (state) {
-        state.person = null
+        state.admin = {}
     },
 }
 
 export default {
+  name: 'admin',
   namespaced: true,
   state,
   getters,

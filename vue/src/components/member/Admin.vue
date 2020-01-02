@@ -1,26 +1,13 @@
-<template>
-  <table>
-    <tr>
-      <td>
-        <legend><h3>비밀번호 </h3></legend>
-      <h5>{{person.passwd}}</h5>
-      <button>수정</button><br/><br/>
-      </td>
-    </tr>
-    <tr>
-      <td><legend><h3>학생부 관리</h3></legend>
-      <h5>{{person.hak}} 학년</h5>
-      <h5>{{person.ban}} 반</h5>
-      <h5>{{person.score}}점</h5>
-      <br/><br/>
-      <button @click.prevent="goUpdate">수정</button>
-      </td>
-    </tr>
-  </table>
-</template>
+<template #content="content"><students></students></template>
+
 <script>
+import Students from "@/components/student/Students.vue"
 import {store} from "../../store"
 export default{
+  name: 'admin',
+  components: {
+		Students
+	},
 	data(){
 		return {
       context : 'http://localhost:8080/',

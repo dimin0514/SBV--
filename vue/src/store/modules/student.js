@@ -1,5 +1,5 @@
 //import loginAPI from '@/api/loginAPI'
-import Constant from '@/store/mutation_types'
+import Constant from '@/store/modules/mutation_types'
 import axios from 'axios'
 const state = {
     person: {},
@@ -90,6 +90,7 @@ const mutations = {
 }
 
 export default {
+  name:'student',
   namespaced: true,
   state,
   getters,

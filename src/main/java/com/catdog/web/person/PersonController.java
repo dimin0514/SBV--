@@ -1,6 +1,7 @@
 package com.catdog.web.person;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,10 +60,10 @@ public class PersonController {
 		
 		if(person != null) {
 			printer.accept("로그인 성공");
-			map.put("result","SUCCESS");
+			map.put("result","True");
 			map.put("person",person);
 		}else {
-			map.put("result","FAIL");
+			map.put("result","False");
 			map.put("person",person);
 		}
 		
@@ -94,7 +95,7 @@ public class PersonController {
 		
 	}
 	@GetMapping("/students")
-	public Stream<Person> list(){
+	public List<Person> list(){
 		printer.accept("list");
 		Iterable<Person> entites = personRepository.findAll();
 		//Iterable<Person> entites = personRepository.findByRole("student");
@@ -103,7 +104,11 @@ public class PersonController {
 			Person dto = modelMapper.map(p, Person.class);
 			list.add(dto);
 		}
-		return list.stream().filter(role-> role.getRole().equals("student"));
+		list.stream()
+		.filter(role-> role.getRole().equals("student"));
+		return list.stream()
+				.sorted(Comparator.comparing(Person::getPersonid)
+						.reversed()).collect(Collectors.toList());
 	}
 //	@GetMapping("/students/search/{searchWord}")
 //	public List<Person> findSome2(@PathVariable String searchWord){

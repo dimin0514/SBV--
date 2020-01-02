@@ -3,7 +3,8 @@ const state = {
 	context: 'http://localhost:8080/',
 	isAuth: false,
 	headerMessage: '공통 화면',
-	errorState: ''
+  errorState: '',
+  sidebars: 'preSidebar'
 }
 const getters = {
 	getErrorState: state => state.errorState,
@@ -31,6 +32,7 @@ const mutations = {
   }
 }
 export default {
+  name:'common',
 	namespaced : true,
 	state,
 	getters,

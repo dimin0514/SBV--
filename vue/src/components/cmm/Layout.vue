@@ -21,14 +21,24 @@ export default {
 		return{
 			content: "컨텐트",
 			footer : "푸터",
-			aside:""
+               aside:"",
+               headerMessage:''
 		}
      },
      computed: {
           changeMessage: function () {
-               return this.$store.state.headerMessage
+               alert('>>> '+this.$store.state.common.isAuth)
+               if(this.$store.state.common.isAuth){
+                    alert('로그인후')
+               }else{
+                    alert('로그인 전')
+               }
+               return this.$store.state.admin.header
+          },
+          changeSidebars: function () {
+               return this.$store.state.common.changeSidebars
+          }
      }
-  }
 }
 </script>
 <style scoped>

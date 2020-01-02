@@ -33,7 +33,7 @@ import axios from 'axios'
 export default {
 	data(){
 		return{
-			context: 'http://localhost:8080/',
+			context: this.$store.state.common.context,
 			list:[]
 		}
 	},
